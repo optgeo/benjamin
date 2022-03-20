@@ -5,6 +5,9 @@
     40.83
   ],
   "zoom": 11.72,
+  "projection": {
+    "name": "albers"
+  },
   "sources": {
     "v": {
       "type": "vector",
@@ -38,7 +41,20 @@
       "source": "v",
       "source-layer": "nad",
       "paint": {
-        "heatmap-radius": 6
+        "heatmap-radius": [
+          "interpolate",
+          [
+            "exponential",
+            2
+          ],
+          [
+            "zoom"
+          ],
+          0,
+          4,
+          24,
+          64
+        ]
       }
     }
   ]
