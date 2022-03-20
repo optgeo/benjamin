@@ -1,0 +1,29 @@
+{
+  "version": 8,
+  "center": [
+    139.7379,
+    35.6475
+  ],
+  "zoom": 11.72,
+  "bearing": -136.9,
+  "pitch": 62,
+  "sources": {
+    "v": {
+      "type": "vector",
+      "tiles": [
+        "https://x.optgeo.org/zfxy-ruby/zxy/{z}/{x}/{y}.pbf"
+      ],
+      "attribution": "USDOT NAD"
+    }
+  },
+  "sprite": "https://sprites.geolonia.com/basic",
+  "glyphs": "https://hfu.github.io/openmaptiles-fonts/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "type": "symbol",
+      "id": "nad",
+      "source": "v",
+      "source-layer": "nad"
+    }
+  ]
+}
