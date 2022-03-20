@@ -1,21 +1,31 @@
 version: 8
 center:
-  - 139.7379
-  - 35.6475
+  - -73.98
+  - 40.83
 zoom: 11.72
-bearing: -136.9
-pitch: 62
 sources:
   v:
     type: vector
     tiles:
-      - http://m354.local:9966/zxy/{z}/{x}/{y}.pbf
+      - http://m343.local:9966/zxy/{z}/{x}/{y}.pbf
+    maxzoom: 14
     attribution: USDOT NAD
+  satellite:
+    type: raster
+    url: mapbox://mapbox.satellite
 sprite: https://sprites.geolonia.com/basic
 glyphs: https://hfu.github.io/openmaptiles-fonts/{fontstack}/{range}.pbf
 layers:
-  - type: symbol
+  - type: raster
+    id: satellite
+    source: satellite
+    paint:
+      raster-contrast: 0.5
+      raster-brightness-max: 0.89
+      raster-fade-duration: 500
+  - type: heatmap
     id: nad
     source: v
     source-layer: nad
-
+    paint:
+      heatmap-radius: 6
