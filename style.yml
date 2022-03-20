@@ -9,7 +9,7 @@ sources:
   v:
     type: vector
     tiles:
-      - http://m343.local:9966/zxy/{z}/{x}/{y}.pbf
+      - https://x.optgeo.org/benjamin/zxy/{z}/{x}/{y}.pbf
     maxzoom: 14
     attribution: USDOT NAD
   satellite:
@@ -38,4 +38,4 @@ layers:
         - 0
         - 4
         - 24
-        - 64
+        - 128

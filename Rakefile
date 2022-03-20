@@ -14,7 +14,7 @@ task :geojsons do
   fn = SRC_URL.split('/')[-1]
   Zip::File.open(fn) {|zip|
     zip.entries.each {|entry|
-      if entry.name == NAME
+      if entry.name == PATH
         entry.get_input_stream.each_line {|line|
           r = line.strip.split(',')
           lng = r[INDEX_LONG].to_f
@@ -40,9 +40,33 @@ task :geojsons do
   }
 end
 
+task :plaingeojsons do
+  n = 0
+  File.foreach(PATH) {|line|
+    r = line.strip.split(',')
+    lng = r[INDEX_LONG].to_f
+    lat = r[INDEX_LAT].to_f
+    next if lng == 0.0 or lat == 0.0
+    f = {
+      :type => 'Feature',
+      :geometry => {
+        :type => 'Point',
+        :coordinates => [lng, lat]
+      },
+      :properties => {},
+      :tippecanoe => {
+        :layer => 'nad'
+      }
+    }
+    print "\x1e#{JSON.dump(f)}\n"
+    n += 1
+    break if n == MAX_FEATURES
+  }
+end
+
 task :tiles do
   sh <<-EOS
-rake geojsons | 
+rake plaingeojsons | 
 tippecanoe \
 --no-tile-compression \
 --output-to-directory=docs/zxy \
