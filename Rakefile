@@ -47,18 +47,9 @@ task :plaingeojsons do
     lng = r[INDEX_LONG].to_f
     lat = r[INDEX_LAT].to_f
     next if lng == 0.0 or lat == 0.0
-    f = {
-      :type => 'Feature',
-      :geometry => {
-        :type => 'Point',
-        :coordinates => [lng, lat]
-      },
-      :properties => {},
-      :tippecanoe => {
-        :layer => 'nad'
-      }
-    }
-    print "\x1e#{JSON.dump(f)}\n"
+    print <<-EOS
+\x1e{"type":"Feature","geometry":{"type":"Point","coordinates":[#{lng},#{lat}]},"properties":{},"tippecanoe":{"layer":"nad"}}
+    EOS
     n += 1
     break if n == MAX_FEATURES
   }
@@ -66,10 +57,11 @@ end
 
 task :tiles do
   sh <<-EOS
-rake plaingeojsons | 
+rake geojsons | 
 tippecanoe \
 --no-tile-compression \
---output-to-directory=docs/zxy \
+--output-to-directory=docs/zxy2 \
+--temporary-directory=#{TEMPORARY_DIRECTORY} \
 --force \
 --minimum-zoom=#{TILE_MINZOOM} \
 --maximum-zoom=#{TILE_MAXZOOM}
